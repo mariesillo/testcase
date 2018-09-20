@@ -1,14 +1,25 @@
 FROM ubuntu:16.04
 
-MAINTAINER mariesillo@gmail.com 
+RUN apt-get update
 
-RUN apt-get update && \
-    apt-get install -y sshd netcat stress && \
-    sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config && \
-    echo "root:${ROOT_PASSWORD}" | chpasswd 
+RUN apt-get install -y openssh-server
+RUN mkdir /var/run/sshd
 
-COPY entrypoint.sh
+RUN echo 'root:root' |chpasswd
+
+RUN sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+
+
+COPY /tmp/sshkey.pub /root/.ssh/authorized_keys
+RUN chmod 700 /root/.ssh/authorized_keys
+
+
+RUN mkdir /root/.ssh
+
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 EXPOSE 22
 
-ENTRYPOINT ["./entrypoint.sh"]
+CMD    ["/usr/sbin/sshd", "-D"]

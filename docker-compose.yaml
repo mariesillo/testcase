@@ -1,4 +1,5 @@
-version: '3'
+version: '2.3'
+#version: '3'
 services:
 #  servers:
 #    image: hermsi/alpine-sshd
@@ -8,12 +9,17 @@ services:
     image: hopsoft/graphite-statsd
     ports:
      - 80:80
-     - 2003-2004:2003:2004
-     - 2023-2024:2023:2024
+     - 2003:2003
+     - 2004:2004
+     - 2023:2023
+     - 2024:2024
      - 8125:8125/udp
      - 8126:8126
   servers:
     build: .
+#    deploy:
+#      replicas: 6
+    scale: 6   
     expose:
      - "22"
 
