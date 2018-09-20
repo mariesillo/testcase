@@ -18,7 +18,7 @@ fi
 #ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 
 ssh-keygen -t rsa -b 4096 -f ./sshkey -q -N ""
-sh-keygen -y -f ./sshkey > ./sshkey.pub
+ssh-keygen -y -f ./sshkey > ./sshkey.pub
 
 
 # Start docker services
@@ -54,7 +54,7 @@ echo $CMD
 # Execute memory 
 for ip in $(cat servers.txt)
 do
-ssh root@${ip} "$CMD"
+ssh -i ./sshkey -oStrictHostKeyChecking=no root@${ip} "$CMD"
 done  
 
 # Complete Script
