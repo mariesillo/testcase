@@ -15,7 +15,7 @@ COPY /tmp/sshkey.pub /root/.ssh/authorized_keys
 RUN chmod 700 /root/.ssh/authorized_keys
 
 
-RUN mkdir /root/.ssh
+#RUN mkdir /root/.ssh
 
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

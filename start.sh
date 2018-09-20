@@ -17,8 +17,8 @@ fi
 
 #ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 
-ssh-keygen -t rsa -b 4096 -f /tmp/sshkey -q -N ""
-sh-keygen -y -f /tmp/sshkey > /tmp/sshkey.pub
+ssh-keygen -t rsa -b 4096 -f ./sshkey -q -N ""
+sh-keygen -y -f ./sshkey > ./sshkey.pub
 
 
 # Start docker services
