@@ -9,7 +9,8 @@ RUN echo 'root:root' |chpasswd
 
 RUN sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
-
+#RUN sed -ri 's/StrictModes yes/StrictModes no/g' /etc/ssh/sshd_config
+RUN echo "StrictHostKeyChecking no" >> /etc/ssh/sshd_config
 
 COPY ./sshkey.pub /root/.ssh/authorized_keys
 RUN chmod 700 /root/.ssh/authorized_keys
