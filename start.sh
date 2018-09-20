@@ -46,15 +46,15 @@ GRAPHITE=`docker inspect --format '{{range .NetworkSettings.Networks}}{{.IPAddre
 echo $GRAPHITE
 
 # Define Mem
-echo "Define Mem Usage command"
+#echo "Define Mem Usage command"
 
-CMD=`while true; do echo -n "$HOSTNAME:`free | grep Mem | awk '{print $3/$2 * 100.0}'`|c" | nc -w 1 -u $GRAPHITE 8125; done`
-echo $CMD
+#CMD=`while true; do echo -n "$HOSTNAME:`free | grep Mem | awk '{print $3/$2 * 100.0}'`|c" | nc -w 1 -u $GRAPHITE 8125; done`
+#echo $CMD
 
 # Execute memory 
 for ip in $(cat servers.txt)
 do
-ssh -i ./sshkey -oStrictHostKeyChecking=no root@${ip} "$CMD"
+  ssh -i ./sshkey -oStrictHostKeyChecking=no root@${ip} "export GRAPHITE=$GRAPHITE; /checkMem.sh &"
 done  
 
 # Complete Script
