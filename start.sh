@@ -40,12 +40,16 @@ docker ps -q | xargs -n 1 docker inspect --format '{{range .NetworkSettings.Netw
 #####docker ps -q | xargs -n 1 docker inspect --format '{{ .NetworkSettings.IPAddress }}' | sed 's/ \// /'
 
 # Get Graphite IP to pass into Mem Script
+echo  "Get Graphite IP to pass into Mem Script"
 
 GRAPHITE=`docker inspect --format '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps | grep "graphite" | awk '{ print $1 }')`
+echo $GRAPHITE
 
-# Define Meme 
+# Define Mem
+echo "Define Mem Usage command"
 
 CMD=`while true; do echo -n "$HOSTNAME:`free | grep Mem | awk '{print $3/$2 * 100.0}'`|c" | nc -w 1 -u $GRAPHITE 8125; done`
+echo $CMD
 
 # Execute memory 
 for ip in $(cat servers.txt)
