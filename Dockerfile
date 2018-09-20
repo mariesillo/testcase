@@ -11,7 +11,7 @@ RUN sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_confi
 RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
 
 
-COPY /tmp/sshkey.pub /root/.ssh/authorized_keys
+COPY ./sshkey.pub /root/.ssh/authorized_keys
 RUN chmod 700 /root/.ssh/authorized_keys
 
 
