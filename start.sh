@@ -54,7 +54,7 @@ echo $GRAPHITE
 # Execute memory 
 for ip in $(cat servers.txt)
 do
-  ssh -i ./sshkey -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null root@${ip} "export GRAPHITE=$GRAPHITE; nohup /checkMem.sh & || exit"
+  ssh -i ./sshkey -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null root@${ip} "export GRAPHITE=$GRAPHITE ; nohup /checkMem.sh > /dev/null 2>&1 &"
 done  
 
 # Complete Script
